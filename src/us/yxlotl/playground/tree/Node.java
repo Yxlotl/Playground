@@ -3,20 +3,25 @@ package us.yxlotl.playground.tree;
 import java.util.ArrayList;
 
 class Node {
-    private String name;
+    private Object data;
     ArrayList<Node> subnodes;
 
-    Node(String name) {
-        this.name = name;
+    Node(Object data) {
+        this.data = data;
         subnodes = new ArrayList<>();
     }
 
-    String getName() {
-        return name;
+    Object getData() {
+        return data;
     }
 
+    void setData(Object o) {
+        data = o;
+    }
     void addSubnode(Node n) {
-        subnodes.add(n);
+        if(!subnodes.contains(n)) {
+            subnodes.add(n);
+        }
     }
 
     Node[] getSubnodes() {
@@ -42,13 +47,13 @@ class Node {
     void print() {
         //print this node's info
         System.out.print("Node ");
-        System.out.println(name);
+        System.out.println(data.toString());
 
         //prints this nodes direct subnodes
         System.out.print("Direct Subnodes: ");
         StringBuilder sub = new StringBuilder();
         for(Node n : subnodes) {
-            sub.append(n.getName()).append(" ");
+            sub.append(n.getData().toString()).append(" ");
         }
         System.out.println(sub);
 
@@ -57,9 +62,17 @@ class Node {
         StringBuilder term = new StringBuilder();
         Node[] terminals = getTerminalNodes().toArray(new Node[0]);
         for(Node n : terminals) {
-            term.append(n.getName()).append(" ");
+            term.append(n.getData().toString()).append(" ");
         }
         System.out.println(term);
         System.out.println();
+    }
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Node) {
+            return ((Node) other).data.equals(data);
+        } else {
+            return data.equals(other);
+        }
     }
 }

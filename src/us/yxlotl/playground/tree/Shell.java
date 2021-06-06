@@ -2,18 +2,25 @@ package us.yxlotl.playground.tree;
 
 public class Shell {
     public static void main(String[] args) {
-        //init nodes
-        Node A = new Node("A");
-        Node B = new Node("B");
-        Node C = new Node("C");
-        Node D = new Node("D");
+        //init registry object
+        Registry r = new Registry();
 
-        //add two subnodes to A -- B and C
-        A.addSubnode(B);
-        C.addSubnode(D);
-        A.addSubnode(C);
+        //test addition of nodes, nodes must be unique
+        r.add("A");
+        r.add("B");
+        r.add("C");
+        r.add("D");
+        //redundant, does nothing
+        r.add("A");
 
-        //print full list
-        A.print();
+        //test linking of nodes, links must be unique!
+        r.link("A", "B");
+        r.link("A", "C");
+        r.link("C", "D");
+        //redundant, does nothing
+        r.link("A", "C");
+
+        //display all nodes in registry
+        r.print();
     }
 }
